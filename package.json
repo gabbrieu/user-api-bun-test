@@ -1,0 +1,14 @@
+{
+  "name": "user-api-bun-test",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun --hot run index.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

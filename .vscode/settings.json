@@ -3,6 +3,7 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "git.mergeEditor": false,
+    "editor.codeActionsOnSave": { "source.organizeImports": true },
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     }

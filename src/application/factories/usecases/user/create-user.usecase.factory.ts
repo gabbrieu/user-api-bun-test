@@ -1,5 +1,5 @@
-import { ICreateUserUseCase } from '../../../../domain/usecases/user/create-user.usecase.interface';
-import { CreateUserUseCase } from '../../../usecases/users/create-user.usecase';
+import { CreateUserUseCase } from '@application/usecases';
+import { ICreateUserUseCase } from '@domain/usecases';
 
 export const makeCreateUserUseCase = (): ICreateUserUseCase => {
     return new CreateUserUseCase();

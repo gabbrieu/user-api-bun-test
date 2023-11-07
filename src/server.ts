@@ -1,5 +1,5 @@
+import { UserRoutes } from '@presentation/routes';
 import { Elysia } from 'elysia';
-import UserRoutes from './presentation/routes/user/user.route';
 
 const app: Elysia = new Elysia();
 

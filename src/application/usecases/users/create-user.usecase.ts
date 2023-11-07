@@ -1,8 +1,7 @@
-import { eq } from 'drizzle-orm';
-import { CreateUserDTO, User } from '../../../domain/entities/user.entity.interface';
-import { ICreateUserUseCase } from '../../../domain/usecases/user/create-user.usecase.interface';
-import { db } from '../../../infrastructure/config/db';
-import { users } from '../../../infrastructure/entities/user.entity';
+import { CreateUserDTO, User } from '@domain/entities';
+import { ICreateUserUseCase } from '@domain/usecases';
+import { db } from '@infrastructure/config';
+import { users } from '@infrastructure/entities';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
     async execute(body: CreateUserDTO): Promise<User> {

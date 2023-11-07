@@ -1,5 +1,5 @@
-import { IGetAllUsersUseCase } from '../../../../domain/usecases/user/get-all-users.usecase.interface';
-import { GetAllUsersUseCase } from '../../../usecases/users/get-all-users.usecase';
+import { GetAllUsersUseCase } from '@application/usecases';
+import { IGetAllUsersUseCase } from '@domain/usecases';
 
 export const makeGetAllUsersUseCase = (): IGetAllUsersUseCase => {
     return new GetAllUsersUseCase();

@@ -1,4 +1,4 @@
-import { User } from '../../entities/user.entity.interface';
+import { User } from '@domain/entities';
 
 export interface IGetAllUsersUseCase {
     execute(): Promise<User[]>;

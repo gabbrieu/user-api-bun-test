@@ -1,9 +1,12 @@
-import { CreateUserDTO, User } from '../../../domain/entities/user.entity.interface';
-import { ICreateUserUseCase } from '../../../domain/usecases/user/create-user.usecase.interface';
-import { IGetAllUsersUseCase } from '../../../domain/usecases/user/get-all-users.usecase.interface';
+import { CreateUserDTO, User } from '@domain/entities';
+import { ICreateUserUseCase, IGetAllUsersUseCase } from '@domain/usecases';
 
 export class UsersController {
-    constructor(private readonly getAllUsersUseCase: IGetAllUsersUseCase, private readonly createUserUseCase: ICreateUserUseCase) {}
+    constructor(
+        private readonly getAllUsersUseCase: IGetAllUsersUseCase,
+        private readonly createUserUseCase: ICreateUserUseCase,
+        private readonly getOneUserUseCase
+    ) {}
 
     async getAll(): Promise<User[]> {
         return await this.getAllUsersUseCase.execute();
@@ -11,5 +14,9 @@ export class UsersController {
 
     async create(body: CreateUserDTO): Promise<User> {
         return await this.createUserUseCase.execute(body);
+    }
+
+    async getOne(id: number): Promise<User> {
+        return await this.getOneUserUseCase.execute();
     }
 }

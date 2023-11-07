@@ -4,8 +4,6 @@ import { db } from '../../../infrastructure/config/db';
 import { users } from '../../../infrastructure/entities/user.entity';
 
 export class GetAllUsersUseCase implements IGetAllUsersUseCase {
-    constructor() {}
-
     async execute(): Promise<User[]> {
         return await db.select().from(users);
     }

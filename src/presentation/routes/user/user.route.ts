@@ -18,19 +18,28 @@ export class UserRoutes {
 
         this.app.group('/users', (app) =>
             app
-                .get('/', () => userController.getAll())
-                .post('/', ({ body }) => userController.create(body), {
+                .get('/', async () => await userController.getAll())
+                .post('/', async ({ body }) => await userController.create(body), {
                     body: UserValidation.createUser(),
                 })
-                .get('/:id', ({ params }) => userController.getOne(params.id), {
-                    params: UserValidation.getOneUser(),
+                .get('/:id', async ({ params }) => await userController.getOne(params.id), {
+                    params: UserValidation.simpleIdParam(),
                     transform: transformNumber,
                 })
-                .patch('/:id', ({ body, params }) => userController.update(Number(params.id), body), {
+                .patch('/:id', async ({ body, params }) => await userController.update(params.id, body), {
                     body: UserValidation.updateUser(Context.BODY),
                     params: UserValidation.updateUser(Context.PARAMS),
                     transform: transformNumber,
                 })
+                .delete(
+                    '/:id',
+                    async ({ params, set }) => {
+                        set.status = 'No Content';
+
+                        await userController.delete(params.id);
+                    },
+                    { params: UserValidation.simpleIdParam(), transform: transformNumber }
+                )
         );
     }
 }

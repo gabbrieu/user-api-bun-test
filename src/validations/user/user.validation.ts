@@ -17,7 +17,7 @@ export abstract class UserValidation {
         return t.Object({ name: t.String(), age: t.Number({ minimum: 0 }), phone: t.Optional(t.Union([t.String(), t.Null()])) });
     }
 
-    static getOneUser(): SimpleIdParam {
+    static simpleIdParam(): SimpleIdParam {
         return t.Object({ id: t.Number({ minimum: 0 }) });
     }
 

@@ -1,12 +1,13 @@
 import { CreateUserDTO, UpdateUserDTO, User } from '@domain/entities';
-import { ICreateUserUseCase, IGetAllUsersUseCase, IGetOneUserUseCase, IUpdateUserUseCase } from '@domain/usecases';
+import { ICreateUserUseCase, IDeleteUserUseCase, IGetAllUsersUseCase, IGetOneUserUseCase, IUpdateUserUseCase } from '@domain/usecases';
 
 export class UsersController {
     constructor(
         private readonly getAllUsersUseCase: IGetAllUsersUseCase,
         private readonly createUserUseCase: ICreateUserUseCase,
         private readonly getOneUserUseCase: IGetOneUserUseCase,
-        private readonly updateUserUseCase: IUpdateUserUseCase
+        private readonly updateUserUseCase: IUpdateUserUseCase,
+        private readonly deleteUserUseCase: IDeleteUserUseCase
     ) {}
 
     async getAll(): Promise<User[]> {
@@ -23,5 +24,9 @@ export class UsersController {
 
     async update(id: number, body: UpdateUserDTO): Promise<User> {
         return await this.updateUserUseCase.execute(id, body);
+    }
+
+    async delete(id: number): Promise<void> {
+        await this.deleteUserUseCase.execute(id);
     }
 }

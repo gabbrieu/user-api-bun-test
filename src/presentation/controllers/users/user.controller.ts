@@ -1,5 +1,12 @@
 import { CreateUserDTO, UpdateUserDTO, User } from '@domain/entities';
-import { ICreateUserUseCase, IDeleteUserUseCase, IGetAllUsersUseCase, IGetOneUserUseCase, IUpdateUserUseCase } from '@domain/usecases';
+import {
+    ICreateUserDTOOutput,
+    ICreateUserUseCase,
+    IDeleteUserUseCase,
+    IGetAllUsersUseCase,
+    IGetOneUserUseCase,
+    IUpdateUserUseCase,
+} from '@domain/usecases';
 
 export class UsersController {
     constructor(
@@ -14,7 +21,7 @@ export class UsersController {
         return await this.getAllUsersUseCase.execute();
     }
 
-    async create(body: CreateUserDTO): Promise<User> {
+    async create(body: CreateUserDTO): Promise<ICreateUserDTOOutput> {
         return await this.createUserUseCase.execute(body);
     }
 

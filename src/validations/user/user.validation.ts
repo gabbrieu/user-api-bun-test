@@ -14,7 +14,13 @@ type UpdateUserParamOrBody<T extends Context.BODY | Context.PARAMS> = T extends 
 
 export abstract class UserValidation {
     static createUser() {
-        return t.Object({ name: t.String(), age: t.Number({ minimum: 0 }), phone: t.Optional(t.Union([t.String(), t.Null()])) });
+        return t.Object({
+            name: t.String(),
+            age: t.Number({ minimum: 0 }),
+            phone: t.Optional(t.Union([t.String(), t.Null()])),
+            email: t.String({ format: 'email', default: 'example@email.com' }),
+            password: t.String(),
+        });
     }
 
     static simpleIdParam(): SimpleIdParam {

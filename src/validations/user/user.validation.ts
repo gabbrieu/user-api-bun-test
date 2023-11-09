@@ -36,4 +36,8 @@ export abstract class UserValidation {
                   phone: t.Optional(t.String()),
               }) as UpdateUserParamOrBody<T>);
     }
+
+    static userLogin() {
+        return t.Object({ email: t.String({ format: 'email' }), password: t.String() });
+    }
 }

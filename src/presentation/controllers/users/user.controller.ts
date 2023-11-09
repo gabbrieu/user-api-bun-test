@@ -1,11 +1,11 @@
-import { CreateUserDTO, UpdateUserDTO, User } from '@domain/entities';
+import { CreateUserDTO, JWTParams, UpdateUserDTO, User, UserLoginDTO, UserWithoutPassword } from '@domain/entities';
 import {
-    ICreateUserDTOOutput,
     ICreateUserUseCase,
     IDeleteUserUseCase,
     IGetAllUsersUseCase,
     IGetOneUserUseCase,
     IUpdateUserUseCase,
+    IUserLoginUseCase,
 } from '@domain/usecases';
 
 export class UsersController {
@@ -14,18 +14,19 @@ export class UsersController {
         private readonly createUserUseCase: ICreateUserUseCase,
         private readonly getOneUserUseCase: IGetOneUserUseCase,
         private readonly updateUserUseCase: IUpdateUserUseCase,
-        private readonly deleteUserUseCase: IDeleteUserUseCase
+        private readonly deleteUserUseCase: IDeleteUserUseCase,
+        private readonly userLoginUseCase: IUserLoginUseCase
     ) {}
 
-    async getAll(): Promise<User[]> {
+    async getAll(): Promise<UserWithoutPassword[]> {
         return await this.getAllUsersUseCase.execute();
     }
 
-    async create(body: CreateUserDTO): Promise<ICreateUserDTOOutput> {
+    async create(body: CreateUserDTO): Promise<UserWithoutPassword> {
         return await this.createUserUseCase.execute(body);
     }
 
-    async getOne(id: number): Promise<User> {
+    async getOne(id: number): Promise<UserWithoutPassword> {
         return await this.getOneUserUseCase.execute(id);
     }
 
@@ -35,5 +36,15 @@ export class UsersController {
 
     async delete(id: number): Promise<void> {
         await this.deleteUserUseCase.execute(id);
+    }
+
+    async login(body: UserLoginDTO, jwtParams: JWTParams) {
+        const { jwt, setCookie } = jwtParams;
+        const loginResponse = await this.userLoginUseCase.execute(body);
+
+        const authToken: string = await jwt.sign({ id: String(loginResponse.id), email: body.email });
+        setCookie('auth', authToken, {
+            httpOnly: true,
+        });
     }
 }

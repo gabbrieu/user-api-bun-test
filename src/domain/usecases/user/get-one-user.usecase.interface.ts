@@ -1,5 +1,5 @@
-import { User } from '@domain/entities';
+import { UserWithoutPassword } from '@domain/entities';
 
 export interface IGetOneUserUseCase {
-    execute(id: number): Promise<User>;
+    execute(id: number): Promise<UserWithoutPassword>;
 }

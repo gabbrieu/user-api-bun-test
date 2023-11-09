@@ -1,13 +1,14 @@
 import { makeUsersController } from '@application/factories';
 import { UsersController } from '@presentation/controllers';
+import { AppType } from '@server';
+import { isAuthenticated } from '@utils/auth.util';
 import { transformNumber } from '@utils/transform.util';
 import { Context, UserValidation } from '@validations/user';
-import { Elysia } from 'elysia';
 
 export class UserRoutes {
-    private readonly app: Elysia;
+    private readonly app: AppType;
 
-    constructor(app: Elysia) {
+    constructor(app: AppType) {
         this.app = app;
 
         this.initRoutes();
@@ -18,6 +19,10 @@ export class UserRoutes {
 
         this.app.group('/users', (app) =>
             app
+                .post('/login', async ({ body, jwt, setCookie }) => await userController.login(body, { jwt, setCookie }), {
+                    body: UserValidation.userLogin(),
+                })
+                .use(isAuthenticated)
                 .get('/', async () => await userController.getAll())
                 .post('/', async ({ body }) => await userController.create(body), {
                     body: UserValidation.createUser(),

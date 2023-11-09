@@ -1,7 +1,5 @@
-import { CreateUserDTO, User } from '@domain/entities';
+import { CreateUserDTO, UserWithoutPassword } from '@domain/entities';
 
 export interface ICreateUserUseCase {
-    execute(body: CreateUserDTO): Promise<ICreateUserDTOOutput>;
+    execute(body: CreateUserDTO): Promise<UserWithoutPassword>;
 }
-
-export interface ICreateUserDTOOutput extends Pick<User, 'id' | 'age' | 'email' | 'name' | 'phone' | 'createdAt' | 'updatedAt'> {}

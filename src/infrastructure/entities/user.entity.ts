@@ -5,7 +5,7 @@ export const UsersEntity = sqliteTable('users', {
     id: integer('id').primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
     age: integer('age').notNull(),
-    email: text('email').notNull(),
+    email: text('email').notNull().unique(),
     password: text('password').notNull(),
     phone: text('phone'),
     createdAt: text('created_at')

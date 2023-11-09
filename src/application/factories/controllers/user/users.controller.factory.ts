@@ -4,8 +4,16 @@ import {
     makeGetAllUsersUseCase,
     makeGetOneUserUseCase,
     makeUpdateUserUseCase,
+    makeUserLoginUseCase,
 } from '@application/factories';
-import { ICreateUserUseCase, IDeleteUserUseCase, IGetAllUsersUseCase, IGetOneUserUseCase, IUpdateUserUseCase } from '@domain/usecases';
+import {
+    ICreateUserUseCase,
+    IDeleteUserUseCase,
+    IGetAllUsersUseCase,
+    IGetOneUserUseCase,
+    IUpdateUserUseCase,
+    IUserLoginUseCase,
+} from '@domain/usecases';
 import { UsersController } from '@presentation/controllers';
 
 export const makeUsersController = () => {
@@ -14,6 +22,14 @@ export const makeUsersController = () => {
     const getOneUserUseCase: IGetOneUserUseCase = makeGetOneUserUseCase();
     const updateUserUseCase: IUpdateUserUseCase = makeUpdateUserUseCase();
     const deleteUserUseCase: IDeleteUserUseCase = makeDeleteUserUseCase();
+    const userLoginUseCase: IUserLoginUseCase = makeUserLoginUseCase();
 
-    return new UsersController(getAllUsersUseCase, createUserUseCase, getOneUserUseCase, updateUserUseCase, deleteUserUseCase);
+    return new UsersController(
+        getAllUsersUseCase,
+        createUserUseCase,
+        getOneUserUseCase,
+        updateUserUseCase,
+        deleteUserUseCase,
+        userLoginUseCase
+    );
 };

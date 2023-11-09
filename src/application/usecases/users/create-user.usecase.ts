@@ -1,11 +1,11 @@
-import { CreateUserDTO } from '@domain/entities';
-import { ICreateUserDTOOutput, ICreateUserUseCase } from '@domain/usecases';
+import { CreateUserDTO, UserWithoutPassword } from '@domain/entities';
+import { ICreateUserUseCase } from '@domain/usecases';
 import { db } from '@infrastructure/config';
 import { UsersEntity } from '@infrastructure/entities';
 import { password } from 'bun';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
-    async execute(body: CreateUserDTO): Promise<ICreateUserDTOOutput> {
+    async execute(body: CreateUserDTO): Promise<UserWithoutPassword> {
         body.password = await password.hash(body.password, {
             algorithm: 'argon2i',
         });

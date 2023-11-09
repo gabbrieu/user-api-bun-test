@@ -13,6 +13,6 @@ COPY drizzle.config.ts .
 COPY drizzle drizzle
 
 ENV NODE_ENV production
-CMD ["bun", "src/index.ts"]
+CMD ["bun", "src/server.ts"]
 
 EXPOSE 3000

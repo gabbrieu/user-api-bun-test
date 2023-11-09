@@ -9,6 +9,7 @@ RUN bun install --production
 
 COPY src src
 COPY tsconfig.json .
+COPY drizzle.config.ts .
 COPY drizzle drizzle
 
 ENV NODE_ENV production

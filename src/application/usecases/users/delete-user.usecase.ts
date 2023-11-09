@@ -1,4 +1,4 @@
-import { User } from '@domain/entities';
+import { UserWithoutPassword } from '@domain/entities';
 import { IDeleteUserUseCase, IGetOneUserUseCase } from '@domain/usecases';
 import { db } from '@infrastructure/config';
 import { UsersEntity } from '@infrastructure/entities';
@@ -8,7 +8,7 @@ export class DeleteUserUseCase implements IDeleteUserUseCase {
     constructor(private readonly getOneUserUseCase: IGetOneUserUseCase) {}
 
     async execute(id: number): Promise<void> {
-        const user: User = await this.getOneUserUseCase.execute(id);
+        const user: UserWithoutPassword = await this.getOneUserUseCase.execute(id);
 
         await db.delete(UsersEntity).where(eq(UsersEntity.id, user.id));
     }

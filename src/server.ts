@@ -1,19 +1,21 @@
 import cookie from '@elysiajs/cookie';
 import jwt from '@elysiajs/jwt';
 import { UserRoutes } from '@presentation/routes';
-import { UnauthorizedError } from '@utils/errors.util';
+import { ConflictError, UnauthorizedError } from '@utils/errors.util';
 import { Elysia } from 'elysia';
 
 export const setup = new Elysia({ name: 'setup' }); // Reserved to use only state and decorate chained methods to apply type to all submodules. https://elysiajs.com/patterns/dependency-injection.html#dependency-injection
 const app = new Elysia()
     .use(setup)
     .error({
-        UnauthorizedError: UnauthorizedError,
+        UNAUTHORIZED_ERROR: UnauthorizedError,
+        CONFLICT_ERROR: ConflictError,
     })
     .onError(({ code, error, set }) => {
         switch (code) {
-            case 'UnauthorizedError': {
-                set.status = 'Unauthorized';
+            case 'CONFLICT_ERROR':
+            case 'UNAUTHORIZED_ERROR': {
+                set.status = error.status;
                 return error.message;
             }
         }

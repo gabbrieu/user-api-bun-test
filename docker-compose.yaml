@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+    app:
+        container_name: api
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+            args:
+                DOCKER_BUILDKIT: 1
+        restart: unless-stopped
+        ports:
+            - '3000:3000'
+        volumes:
+            - ./db/:/root/db/
+            - ./db/:/app/db/
+        depends_on:
+            - sqlite3
+
+    sqlite3:
+        container_name: sqlite
+        image: nouchka/sqlite3:latest
+        stdin_open: true
+        tty: true
+        volumes:
+            - ./db/:/root/db/
+        restart: unless-stopped

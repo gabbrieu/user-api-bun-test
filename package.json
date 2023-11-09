@@ -1,22 +1,22 @@
 {
-  "name": "user-api-bun-test",
-  "version": "1.0.50",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/server.ts",
-    "migration:generate": "bunx drizzle-kit generate:sqlite",
-    "migration:revert": "bunx drizzle-kit drop",
-    "migration:run": "bun run src/infrastructure/migrations/run-migrations.ts"
-  },
-  "dependencies": {
-    "@elysiajs/cookie": "^0.7.0",
-    "@elysiajs/jwt": "^0.7.0",
-    "drizzle-orm": "^0.28.6",
-    "elysia": "latest"
-  },
-  "devDependencies": {
-    "bun-types": "latest",
-    "drizzle-kit": "^0.19.13"
-  },
-  "module": "src/server.js"
+    "name": "user-api-bun-test",
+    "version": "1.0.50",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "bun run --watch src/server.ts",
+        "migration:generate": "bunx drizzle-kit generate:sqlite",
+        "migration:revert": "bunx drizzle-kit drop",
+        "migration:run": "bun run src/infrastructure/migrations/run-migrations.ts"
+    },
+    "dependencies": {
+        "@elysiajs/cookie": "^0.7.0",
+        "@elysiajs/jwt": "^0.7.0",
+        "drizzle-orm": "^0.28.6",
+        "elysia": "latest"
+    },
+    "devDependencies": {
+        "bun-types": "latest",
+        "drizzle-kit": "^0.19.13"
+    },
+    "module": "src/server.js"
 }

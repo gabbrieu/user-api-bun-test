@@ -38,7 +38,7 @@ export class UsersController {
         await this.deleteUserUseCase.execute(id);
     }
 
-    async login(body: UserLoginDTO, jwtParams: JWTParams) {
+    async login(body: UserLoginDTO, jwtParams: JWTParams): Promise<void> {
         const { jwt, setCookie } = jwtParams;
         const loginResponse = await this.userLoginUseCase.execute(body);
 

@@ -6,7 +6,7 @@ import { transformNumber } from '@utils/transform.util';
 import { Context, UserValidation } from '@validations/user';
 
 export class UserRoutes {
-    private readonly app: AppType;
+    public readonly app: AppType;
 
     constructor(app: AppType) {
         this.app = app;
@@ -22,11 +22,11 @@ export class UserRoutes {
                 .post('/login', async ({ body, jwt, setCookie }) => await userController.login(body, { jwt, setCookie }), {
                     body: UserValidation.userLogin(),
                 })
-                .use(isAuthenticated)
-                .get('/', async () => await userController.getAll())
                 .post('/', async ({ body }) => await userController.create(body), {
                     body: UserValidation.createUser(),
                 })
+                .use(isAuthenticated)
+                .get('/', async () => await userController.getAll())
                 .get('/:id', async ({ params }) => await userController.getOne(params.id), {
                     params: UserValidation.simpleIdParam(),
                     transform: transformNumber,

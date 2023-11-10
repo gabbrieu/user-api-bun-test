@@ -5,7 +5,7 @@ import { ConflictError, UnauthorizedError } from '@utils/errors.util';
 import { Elysia } from 'elysia';
 
 export const setup = new Elysia({ name: 'setup' }); // Reserved to use only state and decorate chained methods to apply type to all submodules. https://elysiajs.com/patterns/dependency-injection.html#dependency-injection
-const app = new Elysia()
+export const app = new Elysia()
     .use(setup)
     .error({
         UNAUTHORIZED_ERROR: UnauthorizedError,

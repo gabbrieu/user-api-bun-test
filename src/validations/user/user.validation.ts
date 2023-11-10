@@ -38,6 +38,6 @@ export abstract class UserValidation {
     }
 
     static userLogin() {
-        return t.Object({ email: t.String({ format: 'email' }), password: t.String() });
+        return t.Object({ email: t.String({ format: 'email', default: 'example@email.com' }), password: t.String() });
     }
 }

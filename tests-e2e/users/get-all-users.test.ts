@@ -2,11 +2,11 @@ import { UserWithoutPassword } from '@domain/entities';
 import { UserRoutes } from '@presentation/routes';
 import { app } from '@server';
 import { IUserSetup, UserSetup } from '@test/shared';
-import { afterEach, beforeAll, describe, expect, it } from 'bun:test';
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'bun:test';
 
 describe('Get all users route', () => {
     const appTest = new UserRoutes(app);
-    const baseURL: string = 'http://localhost:3000/users';
+    const baseURL: string = `${app.server?.hostname}:${app.server?.port}/users`;
     let userMock: UserWithoutPassword;
     let cookie: string;
 
@@ -18,6 +18,10 @@ describe('Get all users route', () => {
 
     afterEach(async () => {
         await appTest.app.stop();
+    });
+
+    afterAll(async () => {
+        await UserSetup.deleteAllUsers();
     });
 
     it('should get all users', async () => {

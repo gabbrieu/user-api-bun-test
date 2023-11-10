@@ -13,3 +13,7 @@ export class ConflictError extends Error {
         super(message);
     }
 }
+
+export interface ErrorResponse {
+    message: string;
+}

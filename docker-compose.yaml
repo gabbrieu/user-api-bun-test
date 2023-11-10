@@ -14,6 +14,7 @@ services:
         volumes:
             - ./db/:/root/db/
             - ./db/:/app/db/
+            - .:/app
         depends_on:
             - sqlite3
 

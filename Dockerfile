@@ -1,9 +1,8 @@
-FROM oven/bun
+FROM oven/bun:latest
 
 WORKDIR /app
 
-COPY package.json .
-COPY bun.lockb .
+COPY package.json bun.lockb ./
 
 RUN bun install --production
 

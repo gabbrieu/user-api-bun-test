@@ -1,5 +1,5 @@
-import { UpdateUserDTO, User } from '@domain/entities';
+import { UpdateUserDTO, UserWithoutPassword } from '@domain/entities';
 
 export interface IUpdateUserUseCase {
-    execute(id: number, body: UpdateUserDTO): Promise<User>;
+    execute(id: number, body: UpdateUserDTO): Promise<UserWithoutPassword>;
 }

@@ -1,10 +1,11 @@
 import { CreateUserDTO, UserLoginDTO, UserWithoutPassword } from '@domain/entities';
 import { db } from '@infrastructure/config';
+import { UsersEntity } from '@infrastructure/entities';
 import { UserRoutes } from '@presentation/routes';
 import { app } from '@server';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 
-export const createUserPayload: CreateUserDTO = {
+export const createTestUserPayload: CreateUserDTO = {
     name: 'test',
     age: 24,
     phone: '31986671638',
@@ -28,7 +29,7 @@ export abstract class UserSetup {
             .handle(
                 new Request(baseURL, {
                     method: 'POST',
-                    body: JSON.stringify(createUserPayload),
+                    body: JSON.stringify(createTestUserPayload),
                     headers: { 'Content-Type': 'application/json' },
                 })
             )
@@ -37,7 +38,7 @@ export abstract class UserSetup {
         const loginResponse = await appTest.app.handle(
             new Request(baseURL + '/login', {
                 method: 'POST',
-                body: JSON.stringify({ email: createUserPayload.email, password: createUserPayload.password } as UserLoginDTO),
+                body: JSON.stringify({ email: createTestUserPayload.email, password: createTestUserPayload.password } as UserLoginDTO),
                 headers: { 'Content-Type': 'application/json' },
             })
         );
@@ -48,5 +49,28 @@ export abstract class UserSetup {
             userMock,
             cookie,
         };
+    }
+
+    static async setupLogin(): Promise<UserWithoutPassword> {
+        const appTest = new UserRoutes(app);
+        const baseURL: string = `${app.server?.hostname}:${app.server?.port}/users`;
+
+        migrate(db, { migrationsFolder: 'drizzle' });
+
+        const userMock: UserWithoutPassword = await appTest.app
+            .handle(
+                new Request(baseURL, {
+                    method: 'POST',
+                    body: JSON.stringify(createTestUserPayload),
+                    headers: { 'Content-Type': 'application/json' },
+                })
+            )
+            .then((res) => res.json());
+
+        return userMock;
+    }
+
+    static async deleteAllUsers() {
+        await db.delete(UsersEntity);
     }
 }

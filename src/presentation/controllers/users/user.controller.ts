@@ -1,4 +1,4 @@
-import { CreateUserDTO, JWTParams, UpdateUserDTO, User, UserLoginDTO, UserWithoutPassword } from '@domain/entities';
+import { CreateUserDTO, JWTParams, UpdateUserDTO, UserLoginDTO, UserWithoutPassword } from '@domain/entities';
 import {
     ICreateUserUseCase,
     IDeleteUserUseCase,
@@ -30,7 +30,7 @@ export class UsersController {
         return await this.getOneUserUseCase.execute(id);
     }
 
-    async update(id: number, body: UpdateUserDTO): Promise<User> {
+    async update(id: number, body: UpdateUserDTO): Promise<UserWithoutPassword> {
         return await this.updateUserUseCase.execute(id, body);
     }
 

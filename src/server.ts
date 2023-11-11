@@ -15,7 +15,8 @@ export const app = new Elysia()
         switch (code) {
             case 'NOT_FOUND':
             case 'CONFLICT_ERROR':
-            case 'UNAUTHORIZED_ERROR': {
+            case 'UNAUTHORIZED_ERROR':
+            case 'INTERNAL_SERVER_ERROR': {
                 set.status = error.status;
                 return { message: error.message } as ErrorResponse;
             }

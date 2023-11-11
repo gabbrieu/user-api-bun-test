@@ -22,7 +22,7 @@ describe('Get all users route', () => {
     });
 
     it('should get all users', async () => {
-        const response: Response = await appTest.app.handle(new Request(baseURL, { headers: { Cookie: cookie } }));
+        const response: Response = await appTest.app.handle(new Request(baseURL, { headers: { cookie: cookie } }));
         const responseBody: UserWithoutPassword[] = await response.json<UserWithoutPassword[]>();
 
         expect(response.status).toBe(200);

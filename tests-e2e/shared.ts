@@ -52,7 +52,7 @@ export abstract class UserSetup {
         };
     }
 
-    static async setupLogin(): Promise<UserWithoutPassword> {
+    static async createOneUserMock(): Promise<UserWithoutPassword> {
         const appTest = new UserRoutes(app);
         const baseURL: string = `${app.server?.hostname}:${app.server?.port}/users`;
 

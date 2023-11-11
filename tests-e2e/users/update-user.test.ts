@@ -30,7 +30,7 @@ describe('Update one user route', () => {
         const response: Response = await appTest.app.handle(
             new Request(baseURL + `/${userMock.id}`, {
                 method: 'PATCH',
-                headers: { Cookie: cookie, 'content-type': 'application/json' },
+                headers: { cookie: cookie, 'content-type': 'application/json' },
                 body: JSON.stringify(sentBody),
             })
         );
@@ -48,7 +48,7 @@ describe('Update one user route', () => {
         const response: Response = await appTest.app.handle(
             new Request(baseURL + `/${idThatNotExists}`, {
                 method: 'PATCH',
-                headers: { Cookie: cookie, 'content-type': 'application/json' },
+                headers: { cookie: cookie, 'content-type': 'application/json' },
                 body: JSON.stringify(sentBody),
             })
         );

@@ -33,8 +33,8 @@ describe('Create user route', () => {
         expect(responseBody).toMatchObject({ ...sentBodyWithoutPassword, id: 1 });
     });
 
-    it('should throw an CONFLICT_ERROR when the email is already being used', async () => {
-        const userCreated: UserWithoutPassword = await UserSetup.setupLogin();
+    it('should throw a CONFLICT_ERROR when the email is already being used', async () => {
+        const userCreated: UserWithoutPassword = await UserSetup.createOneUserMock();
 
         const sentBody: ICreateUserDTO = {
             age: 20,

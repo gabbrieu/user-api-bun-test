@@ -11,7 +11,7 @@ describe('Login route', () => {
     let userMock: UserWithoutPassword;
 
     beforeAll(async () => {
-        const userSetup: UserWithoutPassword = await UserSetup.setupLogin();
+        const userSetup: UserWithoutPassword = await UserSetup.createOneUserMock();
         userMock = userSetup;
     });
 

@@ -2,6 +2,7 @@
     "name": "user-api-bun-test",
     "version": "1.0.50",
     "scripts": {
+        "build": "bun build ./src/server.ts --target bun --outdir dist",
         "dev": "bun run --watch src/server.ts",
         "test": "NODE_ENV='test' PORT=3001 bun test",
         "migration:generate": "bunx drizzle-kit generate:sqlite",

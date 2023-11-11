@@ -44,3 +44,5 @@ package-lock.json
 database.sqlite
 
 .env
+
+dist/

@@ -1,4 +1,4 @@
-import { CreateUserDTO, UserWithoutPassword } from '@domain/entities';
+import { ICreateUserDTO, UserWithoutPassword } from '@domain/entities';
 import { ICreateUserUseCase } from '@domain/usecases';
 import { db } from '@infrastructure/config';
 import { UsersEntity } from '@infrastructure/entities';
@@ -7,7 +7,7 @@ import { password } from 'bun';
 import { eq } from 'drizzle-orm';
 
 export class CreateUserUseCase implements ICreateUserUseCase {
-    async execute(body: CreateUserDTO): Promise<UserWithoutPassword> {
+    async execute(body: ICreateUserDTO): Promise<UserWithoutPassword> {
         body.password = await password.hash(body.password, {
             algorithm: 'argon2i',
         });

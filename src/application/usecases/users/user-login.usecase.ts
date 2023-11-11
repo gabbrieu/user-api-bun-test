@@ -1,4 +1,4 @@
-import { User, UserLoginDTO } from '@domain/entities';
+import { IUserLoginDTO, User } from '@domain/entities';
 import { IUserLoginDTOOutput, IUserLoginUseCase } from '@domain/usecases';
 import { db } from '@infrastructure/config';
 import { UsersEntity } from '@infrastructure/entities';
@@ -7,7 +7,7 @@ import { password } from 'bun';
 import { eq } from 'drizzle-orm';
 
 export class UserLoginUseCase implements IUserLoginUseCase {
-    async execute(body: UserLoginDTO): Promise<IUserLoginDTOOutput> {
+    async execute(body: IUserLoginDTO): Promise<IUserLoginDTOOutput> {
         const { email: loginEmail, password: loginPassword } = body;
 
         const user: User | undefined = (await db.select().from(UsersEntity).where(eq(UsersEntity.email, loginEmail))).at(0);

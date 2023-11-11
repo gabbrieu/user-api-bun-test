@@ -1,5 +1,5 @@
-import { CreateUserDTO, UserWithoutPassword } from '@domain/entities';
+import { ICreateUserDTO, UserWithoutPassword } from '@domain/entities';
 
 export interface ICreateUserUseCase {
-    execute(body: CreateUserDTO): Promise<UserWithoutPassword>;
+    execute(body: ICreateUserDTO): Promise<UserWithoutPassword>;
 }

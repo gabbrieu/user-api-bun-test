@@ -1,9 +1,9 @@
-import { UpdateUserDTO, UserWithoutPassword } from '@domain/entities';
+import { IUpdateUserDTO, UserWithoutPassword } from '@domain/entities';
 import { UserRoutes } from '@presentation/routes';
 import { app } from '@server';
 import { IUserSetup, UserSetup } from '@test/shared';
 import { ErrorResponse } from '@utils/errors.util';
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'bun:test';
+import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
 
 describe('Update one user route', () => {
     const appTest = new UserRoutes(app);
@@ -17,16 +17,13 @@ describe('Update one user route', () => {
         cookie = userSetup.cookie;
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
+        await UserSetup.deleteAllUsers();
         await appTest.app.stop();
     });
 
-    afterAll(async () => {
-        await UserSetup.deleteAllUsers();
-    });
-
     it('should update one user', async () => {
-        const sentBody: UpdateUserDTO = {
+        const sentBody: IUpdateUserDTO = {
             age: 100,
             name: 'Update user mock',
         };
@@ -45,7 +42,7 @@ describe('Update one user route', () => {
 
     it('should throw a NOT_FOUND_ERROR when the user does not exists', async () => {
         const idThatNotExists: number = 9120912;
-        const sentBody: UpdateUserDTO = {
+        const sentBody: IUpdateUserDTO = {
             name: 'Wrong user',
         };
         const response: Response = await appTest.app.handle(

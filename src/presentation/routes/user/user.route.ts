@@ -19,12 +19,26 @@ export class UserRoutes {
 
         this.app.group('/users', (app) =>
             app
-                .post('/login', async ({ body, jwt, setCookie }) => await userController.login(body, { jwt, setCookie }), {
-                    body: UserValidation.userLogin(),
-                })
-                .post('/', async ({ body }) => await userController.create(body), {
-                    body: UserValidation.createUser(),
-                })
+                .post(
+                    '/login',
+                    async ({ body, jwt, setCookie, set }) => {
+                        set.status = 'No Content';
+                        await userController.login(body, { jwt, setCookie });
+                    },
+                    {
+                        body: UserValidation.userLogin(),
+                    }
+                )
+                .post(
+                    '/',
+                    async ({ body, set }) => {
+                        set.status = 'Created';
+                        return await userController.create(body);
+                    },
+                    {
+                        body: UserValidation.createUser(),
+                    }
+                )
                 .use(isAuthenticated)
                 .get('/', async () => await userController.getAll())
                 .get('/:id', async ({ params }) => await userController.getOne(params.id), {
@@ -40,7 +54,6 @@ export class UserRoutes {
                     '/:id',
                     async ({ params, set }) => {
                         set.status = 'No Content';
-
                         await userController.delete(params.id);
                     },
                     { params: UserValidation.simpleIdParam(), transform: transformNumber }

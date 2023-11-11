@@ -1,11 +1,12 @@
-import { CreateUserDTO, UserLoginDTO, UserWithoutPassword } from '@domain/entities';
+import { ICreateUserDTO, IUserLoginDTO, UserWithoutPassword } from '@domain/entities';
 import { db } from '@infrastructure/config';
 import { UsersEntity } from '@infrastructure/entities';
 import { UserRoutes } from '@presentation/routes';
 import { app } from '@server';
+import { sql } from 'drizzle-orm';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 
-export const createTestUserPayload: CreateUserDTO = {
+export const createTestUserPayload: ICreateUserDTO = {
     name: 'test',
     age: 24,
     phone: '31986671638',
@@ -38,7 +39,7 @@ export abstract class UserSetup {
         const loginResponse = await appTest.app.handle(
             new Request(baseURL + '/login', {
                 method: 'POST',
-                body: JSON.stringify({ email: createTestUserPayload.email, password: createTestUserPayload.password } as UserLoginDTO),
+                body: JSON.stringify({ email: createTestUserPayload.email, password: createTestUserPayload.password } as IUserLoginDTO),
                 headers: { 'Content-Type': 'application/json' },
             })
         );
@@ -72,5 +73,6 @@ export abstract class UserSetup {
 
     static async deleteAllUsers() {
         await db.delete(UsersEntity);
+        db.run(sql`DELETE FROM sqlite_sequence`);
     }
 }

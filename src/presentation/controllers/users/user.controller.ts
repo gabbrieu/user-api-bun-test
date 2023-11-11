@@ -1,4 +1,4 @@
-import { CreateUserDTO, JWTParams, UpdateUserDTO, UserLoginDTO, UserWithoutPassword } from '@domain/entities';
+import { ICreateUserDTO, IUpdateUserDTO, IUserLoginDTO, JWTParams, UserWithoutPassword } from '@domain/entities';
 import {
     ICreateUserUseCase,
     IDeleteUserUseCase,
@@ -22,7 +22,7 @@ export class UsersController {
         return await this.getAllUsersUseCase.execute();
     }
 
-    async create(body: CreateUserDTO): Promise<UserWithoutPassword> {
+    async create(body: ICreateUserDTO): Promise<UserWithoutPassword> {
         return await this.createUserUseCase.execute(body);
     }
 
@@ -30,7 +30,7 @@ export class UsersController {
         return await this.getOneUserUseCase.execute(id);
     }
 
-    async update(id: number, body: UpdateUserDTO): Promise<UserWithoutPassword> {
+    async update(id: number, body: IUpdateUserDTO): Promise<UserWithoutPassword> {
         return await this.updateUserUseCase.execute(id, body);
     }
 
@@ -38,7 +38,7 @@ export class UsersController {
         await this.deleteUserUseCase.execute(id);
     }
 
-    async login(body: UserLoginDTO, jwtParams: JWTParams): Promise<void> {
+    async login(body: IUserLoginDTO, jwtParams: JWTParams): Promise<void> {
         const { jwt, setCookie } = jwtParams;
         const loginResponse = await this.userLoginUseCase.execute(body);
 

@@ -3,7 +3,7 @@ import { UserRoutes } from '@presentation/routes';
 import { app } from '@server';
 import { IUserSetup, UserSetup } from '@test/shared';
 import { ErrorResponse } from '@utils/errors.util';
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'bun:test';
+import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
 
 describe('Get one user route', () => {
     const appTest = new UserRoutes(app);
@@ -17,12 +17,9 @@ describe('Get one user route', () => {
         cookie = userSetup.cookie;
     });
 
-    afterEach(async () => {
-        await appTest.app.stop();
-    });
-
     afterAll(async () => {
         await UserSetup.deleteAllUsers();
+        await appTest.app.stop();
     });
 
     it('should get one user', async () => {

@@ -1,9 +1,9 @@
-import { UserLoginDTO, UserWithoutPassword } from '@domain/entities';
+import { IUserLoginDTO, UserWithoutPassword } from '@domain/entities';
 import { UserRoutes } from '@presentation/routes';
 import { app } from '@server';
 import { UserSetup, createTestUserPayload } from '@test/shared';
 import { ErrorResponse } from '@utils/errors.util';
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'bun:test';
+import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
 
 describe('Login route', () => {
     const appTest = new UserRoutes(app);
@@ -15,16 +15,13 @@ describe('Login route', () => {
         userMock = userSetup;
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
+        await UserSetup.deleteAllUsers();
         await appTest.app.stop();
     });
 
-    afterAll(async () => {
-        await UserSetup.deleteAllUsers();
-    });
-
     it('should login the user', async () => {
-        const sentBody: UserLoginDTO = {
+        const sentBody: IUserLoginDTO = {
             email: userMock.email,
             password: createTestUserPayload.password,
         };
@@ -38,13 +35,13 @@ describe('Login route', () => {
         );
         const cookie: string = response.headers.getSetCookie()[0].split(';')[0];
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(204);
         expect(cookie).toBeString();
         expect(cookie).toContain('auth=');
     });
 
     it('should throw an UNAUTHORIZED_ERROR when the email is wrong', async () => {
-        const sentBody: UserLoginDTO = {
+        const sentBody: IUserLoginDTO = {
             email: 'wrong-email@gmail.com',
             password: createTestUserPayload.password,
         };
@@ -63,7 +60,7 @@ describe('Login route', () => {
     });
 
     it('should throw an UNAUTHORIZED_ERROR when the password is wrong', async () => {
-        const sentBody: UserLoginDTO = {
+        const sentBody: IUserLoginDTO = {
             email: userMock.email,
             password: 'wrong password',
         };
@@ -82,7 +79,7 @@ describe('Login route', () => {
     });
 
     it('should throw an UNAUTHORIZED_ERROR when the email and password are wrong', async () => {
-        const sentBody: UserLoginDTO = {
+        const sentBody: IUserLoginDTO = {
             email: 'wrong-email@gmail.com',
             password: 'wrong password',
         };
@@ -101,7 +98,7 @@ describe('Login route', () => {
     });
 
     it('should throw a BAD_REQUEST_ERROR when the email format is wrong', async () => {
-        const sentBody: UserLoginDTO = {
+        const sentBody: IUserLoginDTO = {
             email: 'malformed email',
             password: createTestUserPayload.password,
         };

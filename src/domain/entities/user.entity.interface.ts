@@ -7,11 +7,11 @@ export type User = InferSelectModel<typeof UsersEntity>;
 
 export type UserWithoutPassword = Omit<User, 'password'>;
 
-export type CreateUserDTO = Pick<InferInsertModel<typeof UsersEntity>, 'age' | 'name' | 'phone' | 'email' | 'password'>;
+export type ICreateUserDTO = Pick<InferInsertModel<typeof UsersEntity>, 'age' | 'name' | 'phone' | 'email' | 'password'>;
 
-export type UpdateUserDTO = Pick<Partial<User>, 'age' | 'name' | 'phone'>;
+export type IUpdateUserDTO = Pick<Partial<User>, 'age' | 'name' | 'phone'>;
 
-export type UserLoginDTO = Pick<User, 'email' | 'password'>;
+export type IUserLoginDTO = Pick<User, 'email' | 'password'>;
 
 export type JWTParams = {
     setCookie: CookieRequest['setCookie'];

@@ -1,4 +1,4 @@
-import { UpdateUserDTO, UserWithoutPassword } from '@domain/entities';
+import { IUpdateUserDTO, UserWithoutPassword } from '@domain/entities';
 import { IGetOneUserUseCase, IUpdateUserUseCase } from '@domain/usecases';
 import { db } from '@infrastructure/config';
 import { UsersEntity } from '@infrastructure/entities';
@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 export class UpdateUserUseCase implements IUpdateUserUseCase {
     constructor(private readonly getOneUserUseCase: IGetOneUserUseCase) {}
 
-    async execute(id: number, body: UpdateUserDTO): Promise<UserWithoutPassword> {
+    async execute(id: number, body: IUpdateUserDTO): Promise<UserWithoutPassword> {
         const user: UserWithoutPassword = await this.getOneUserUseCase.execute(id);
 
         const updatedUser: UserWithoutPassword[] = await db

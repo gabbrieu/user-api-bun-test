@@ -47,6 +47,7 @@ The User API is under the http://localhost:3000/users endpoint, and it has all C
 -   Update an user - PATCH http://localhost:3000/users/:id
 -   Delete an user - DELETE http://localhost:3000/users/:id
 -   Login - POST http://localhost:3000/users/login
+-   Logout - POST http://localhost:3000/users/logout
 
 The /login endpoint serves a cookie to be used in all endpoints but the create an user and itself.
 

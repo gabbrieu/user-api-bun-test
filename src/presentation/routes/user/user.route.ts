@@ -4,6 +4,7 @@ import { AppType } from '@server';
 import { isAuthenticated } from '@utils/auth.util';
 import { transformNumber } from '@utils/transform.util';
 import { Context, UserValidation } from '@validations/user';
+import { serialize } from 'cookie';
 
 export class UserRoutes {
     public readonly app: AppType;
@@ -21,9 +22,15 @@ export class UserRoutes {
             app
                 .post(
                     '/login',
-                    async ({ body, jwt, setCookie, set }) => {
+                    async ({ body, jwt, set, cookie: { auth } }) => {
+                        const authToken: string = await userController.login(body, { jwt });
+
+                        auth.set({
+                            value: authToken,
+                            httpOnly: true,
+                            path: '/',
+                        });
                         set.status = 'No Content';
-                        await userController.login(body, { jwt, setCookie });
                     },
                     {
                         body: UserValidation.userLogin(),
@@ -58,6 +65,15 @@ export class UserRoutes {
                     },
                     { params: UserValidation.simpleIdParam(), transform: transformNumber }
                 )
+                .post('/logout', ({ set, cookie, cookie: { auth } }) => {
+                    set.headers['Set-Cookie'] = serialize(auth.name!, '', {
+                        expires: new Date('Thu, Jan 01 1970 00:00:00 UTC'),
+                        path: '/',
+                    });
+                    delete cookie.auth;
+
+                    set.status = 'No Content';
+                })
         );
     }
 }

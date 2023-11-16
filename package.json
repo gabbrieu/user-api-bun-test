@@ -10,7 +10,6 @@
         "migration:run": "bun run src/infrastructure/migrations/run-migrations.ts"
     },
     "dependencies": {
-        "@elysiajs/cookie": "^0.7.0",
         "@elysiajs/jwt": "^0.7.0",
         "drizzle-orm": "^0.29.0",
         "elysia": "0.7.16"

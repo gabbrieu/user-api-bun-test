@@ -8,7 +8,7 @@ export const isAuthenticated = (app: AppType) =>
             throw new UnauthorizedError('Missing auth cookie');
         }
 
-        const userJWT = await jwt.verify(cookie.auth);
+        const userJWT = await jwt.verify(cookie.auth.value);
         if (!userJWT) {
             set.status = 401;
             throw new UnauthorizedError('JWT invalid');

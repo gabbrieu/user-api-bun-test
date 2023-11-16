@@ -1,12 +1,18 @@
-import cookie from '@elysiajs/cookie';
 import jwt from '@elysiajs/jwt';
 import { UserRoutes } from '@presentation/routes';
 import { ConflictError, ErrorResponse, UnauthorizedError } from '@utils/errors.util';
 import { Elysia } from 'elysia';
 
 export const setup = new Elysia({ name: 'setup' }); // Reserved to use only state and decorate chained methods to apply type to all submodules. https://elysiajs.com/patterns/dependency-injection.html#dependency-injection
-export const app = new Elysia()
+export const app = new Elysia({ cookie: { secrets: Bun.env.JWT_SECRET } })
     .use(setup)
+    .use(
+        jwt({
+            name: 'jwt',
+            secret: Bun.env.JWT_SECRET || 'super_secret',
+            exp: '2d',
+        })
+    )
     .error({
         UNAUTHORIZED_ERROR: UnauthorizedError,
         CONFLICT_ERROR: ConflictError,
@@ -21,20 +27,10 @@ export const app = new Elysia()
                 return { message: error.message } as ErrorResponse;
             }
         }
-    })
-    .use(
-        jwt({
-            name: 'jwt',
-            secret: Bun.env.JWT_SECRET || 'super_secret',
-            exp: '2d',
-        })
-    )
-    .use(cookie());
+    });
 
 new UserRoutes(app);
-
 app.listen(Bun.env.PORT || 3000);
-
 console.log(`🦊 Elysia app is running at ${app.server?.hostname}:${app.server?.port}`);
 
 export type AppType = typeof app;

@@ -38,13 +38,12 @@ export class UsersController {
         await this.deleteUserUseCase.execute(id);
     }
 
-    async login(body: IUserLoginDTO, jwtParams: JWTParams): Promise<void> {
-        const { jwt, setCookie } = jwtParams;
+    async login(body: IUserLoginDTO, jwtParams: JWTParams): Promise<string> {
+        const { jwt } = jwtParams;
         const loginResponse = await this.userLoginUseCase.execute(body);
 
         const authToken: string = await jwt.sign({ id: String(loginResponse.id), email: body.email });
-        setCookie('auth', authToken, {
-            httpOnly: true,
-        });
+
+        return authToken;
     }
 }
